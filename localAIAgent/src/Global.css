@@ -1,0 +1,25 @@
+/* src/index.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+/* Aplicado a nivel de body si lo deseas cambiar globalmente */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Modo oscuro activado según la preferencia del usuario */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+  }
+}
+
+

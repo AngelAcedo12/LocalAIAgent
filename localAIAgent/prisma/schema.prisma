@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/**
+ * ===== ENUMS =====
+ */
+enum ModelStatus {
+  NOT_DOWNLOADED @map("not_downloaded")
+  QUEUED         @map("queued")
+  DOWNLOADING    @map("downloading")
+  READY          @map("ready")
+  ERROR          @map("error")
+}
+
+enum DownloadStatus {
+  QUEUED  @map("queued")
+  RUNNING @map("running")
+  DONE    @map("done")
+  ERROR   @map("error")
+}
+
+/**
+ * ===== TABLAS PRINCIPALES =====
+ */
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  reference String    @unique
+  title     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  messages  Message[]
+
+  @@index([createdAt])
+  @@map("conversations")
+}
+
+model Message {
+  id             Int      @id @default(autoincrement())
+  conversationId Int      @map("conversation_id")
+  role           String
+  content        String
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+model TypeConexion {
+  id    Int     @id @default(autoincrement())
+  title String?
+
+  models Model[]
+
+  @@map("type_conexions")
+}
+
+/**
+ * Modelos descargables (HF)
+ */
+model Model {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  repo      String // p.ej: TheBloke/Mistral-7B-Instruct-GGUF
+  filename  String // p.ej: mistral-7b-instruct.Q4_K_M.gguf
+  url       String // URL de descarga (resolve)
+  status    ModelStatus @default(NOT_DOWNLOADED)
+  localPath String?     @map("local_path")
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  // Opcionales
+  typeConexionId Int?    @map("type_conexion")
+  sizeBytes      Int?    @map("size")
+  quantization   String? // Q4_K_M, Q5, FP16, etc.
+  family         String? // Llama, Mistral, Qwen...
+
+  typeConexion TypeConexion? @relation(fields: [typeConexionId], references: [id], onDelete: NoAction)
+  downloads    Download[]
+
+  @@index([repo, filename])
+  @@index([status])
+  @@map("models")
+}
+
+/**
+ * Historial/estado de descargas (opcional pero útil)
+ */
+model Download {
+  id              Int            @id @default(autoincrement())
+  modelId         Int            @map("model_id")
+  url             String
+  bytesTotal      Int?           @map("bytes_total")
+  bytesDownloaded Int?           @default(0) @map("bytes_downloaded")
+  status          DownloadStatus @default(QUEUED)
+  startedAt       DateTime?      @map("started_at")
+  finishedAt      DateTime?      @map("finished_at")
+  error           String?
+
+  model Model @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@index([modelId])
+  @@index([status])
+  @@map("downloads")
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "sql:default",
+    "sql:allow-execute",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "bin",
+          "sidecar": true
+        }
+      ]
+    },
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "llama-server",
+          "sidecar": true
+        },
+        {
+          "name": "exec-sh",
+          "cmd": "sh",
+          "args": [
+            "-c",
+            {
+              "validator": "\\S+"
+            }
+          ],
+         
+          "sidecar": false
+        }
+      ]
+    },
+    "shell:allow-open"
+  ]
+}

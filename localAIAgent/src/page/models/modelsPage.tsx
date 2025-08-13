@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { DefaultModelDownloadButton } from '../../components/DefaultModelDownloadButton'
 
 interface Model {
   name: string;
@@ -23,6 +24,10 @@ export default function ModelsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Modelos</h1>
+
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-4">Descargar Modelos</h2>
+      </div>
 
       <form onSubmit={handleSubmit} className="mb-8 space-y-4 max-w-md">
         <div>

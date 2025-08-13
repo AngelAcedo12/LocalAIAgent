@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import formaterDate from "../utils/dateFormater"
 import SideNavigation from "./icons/SideNavigation"
 import useConversation from "../hooks/useConversation"
+import { useEffect } from "react"
+import { useChatContext } from "../providers/ChatContext"
 
 
 const ListConversation = () => {
@@ -70,16 +72,18 @@ const Conversation = (props: { date: string, title: string, id: string, new: boo
 
 
 export default function LeftBar() {
-    const conversationHook = useConversation();
-    const closeNav = () => {
-        conversationHook.changeStateOpenOrClose()
+    const { conversationHook } = useChatContext();
 
-    }
+
+    useEffect(() => {
+
+    }, [])
+
     return (
 
         <>
-            <ul className={'flex flex-col z-50 h-full  gap-2 bg-neutral-900 p-2 transition-all ' +
-                (conversationHook.openOrClose ? 'md:w-96 w-full md:relative fixed  ' : 'w-[0%] -translate-x-full hidden')
+            <ul className={'flex flex-col z-50 h-full  gap-2 bg-neutral-900 p-2  ' +
+                (conversationHook.openOrClose ? 'md:w-96 w-full md:relative fixed animate-open-navigation ' : 'w-[0%]  hidden -translate-x-[200%]   transition-all duration-500 ')
             }
             >
                 <div className='flex flex-row justify-between items-center  '>
@@ -87,12 +91,12 @@ export default function LeftBar() {
                         <h1 className='text-rose-500 text-xl p-1 '>Escarlet AI</h1>
                     </Link>
                     <div className='flex flex-row gap-2'>
-                        <button className='rounded-md  p-1 hover:bg-zinc-800 transition-all'>
+
+
+                        <button onClick={conversationHook.close} className='rounded-md  p-1 hover:bg-zinc-800 transition-all'>
                             <SideNavigation width={24} height={24} className='fill-rose-500'></SideNavigation>
                         </button>
-                        <button onClick={closeNav} className='rounded-md  p-1 hover:bg-zinc-800 transition-all'>
-                            <SideNavigation width={24} height={24} className='fill-rose-500'></SideNavigation>
-                        </button>
+
                     </div>
                 </div>
 

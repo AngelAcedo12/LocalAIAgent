@@ -13,6 +13,7 @@ fn ensure_models_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     let base = app.path().app_data_dir().map_err(|e| e.to_string())?;
     let dir = base.join("models");
     std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+
     Ok(dir)
 }
 
@@ -60,8 +61,7 @@ pub async fn start_download(
             }
         };
 
-
-        log::info!("Response status: {}", resp.status());   
+        log::info!("Response status: {}", resp.status());
 
         // Tamaño total si el servidor lo da (sumando lo ya descargado)
         let total = resp
@@ -86,8 +86,6 @@ pub async fn start_download(
         };
 
         log::info!("Iniciando request: {}", url);
-
-   
 
         let mut stream = resp.bytes_stream();
         while let Some(chunk) = stream.next().await {
@@ -120,9 +118,23 @@ pub async fn start_download(
 }
 
 #[tauri::command]
+pub async fn is_model_dir(filename: String, app: tauri::AppHandle) -> Result<bool, String> {
+    let models_dir = ensure_models_dir(&app)?;
+    let model_path = models_dir.join(filename);
+    Ok(model_path.exists())
+}
+
+#[tauri::command]
 pub fn cancel_download(model_id: i32) -> Result<(), String> {
     if let Some(handle) = DOWNLOADS.lock().unwrap().remove(&model_id) {
         handle.abort();
     }
     Ok(())
+}
+
+#[tauri::command]
+pub fn is_default_model_downloading(app: tauri::AppHandle) -> Result<bool, String> {
+    let models_dir = ensure_models_dir(&app)?;
+    let model_path = models_dir.join("");
+    Ok(model_path.exists())
 }

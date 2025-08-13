@@ -43,7 +43,7 @@ export async function seedModels(dbUrl: string) {
         "ggml-org/gemma-3-1b-it-GGUF",
         "gemma-3-1b-it-Q4_K_M.gguf",
         "https://huggingface.co/ggml-org/gemma-3-1b-it-GGUF/resolve/main/gemma-3-1b-it-Q4_K_M.gguf?download=true",
-        appConfig.models_dir + "/gemma-3-1b-it-Q4_K_M.gguf",
+        (await invoke<string>("models_dir")) + "/gemma-3-1b-it-Q4_K_M.gguf",
       ]
     );
   }
@@ -57,6 +57,6 @@ export default async function initApp() {
     console.error("Error initializing database:", error);
   }
   await seedModels(dbUrl);
-  await startDefaultDownload();
+
   // aquí sigues con el resto de inicialización
 }

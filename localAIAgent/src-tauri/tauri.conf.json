@@ -8,6 +8,7 @@
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
+    
   },
   "app": {
     "windows": [
@@ -29,7 +30,9 @@
     }
     
   },
+  
   "bundle": {
+    
     "resources": [],
     "externalBin": [
       "bin/llama-server"

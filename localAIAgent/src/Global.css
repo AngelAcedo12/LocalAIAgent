@@ -2,6 +2,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "tailwindcss-animated";
 
 :root {
   --bg-color: #ffffff;
@@ -22,4 +23,8 @@ body {
   }
 }
 
-
+textarea::-webkit-scrollbar {
+  width: 0;
+  field-sizing: content;
+  resize: none;
+}

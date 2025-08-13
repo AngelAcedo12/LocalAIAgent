@@ -4,6 +4,46 @@ export default {
   theme: {
     extend: {
       keyframes: {
+        "radius-to-square": {
+          "0%": { borderRadius: "9999px" }, // equivalente a rounded-full
+          "100%": { borderRadius: "0.5rem" }, // equivalente a rounded-lg
+        },
+        "radius-to-round": {
+          "0%": { borderRadius: "0.5rem" }, // rounded-lg
+          "100%": { borderRadius: "9999px" }, // rounded-full
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "fade-out": {
+          "0%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+          "100%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+          },
+        },
+
+        "open-navigation": {
+          "0%": {
+            transform: "translateX(-100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+
         "notification-enter": {
           "0%": {
             transform: "translateX(100%) scale(0.95)",
@@ -33,7 +73,13 @@ export default {
           },
         },
       },
+
       animation: {
+        "radius-to-square": "radius-to-square 200ms ease-in-out forwards",
+        "radius-to-round": "radius-to-round  200ms ease-in-out forwards",
+        "open-navigation": "open-navigation 0.4s ease forwards",
+        "fade-in": "fade-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
+        "fade-out": "fade-out 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
         "notification-enter":
           "notification-enter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
         "notification-exit":
@@ -41,5 +87,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animated")],
 };

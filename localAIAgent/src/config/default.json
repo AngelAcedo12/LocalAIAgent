@@ -1,0 +1,13 @@
+{
+    "defaultModel": "llama2",
+    "modelConfig": {
+        "temperature": 0.7,
+        "maxLength": 2048,
+        "topP": 0.95
+    },
+    "app": {
+        "theme": "light",
+        "language": "es",
+        "autoUpdate": true
+    }
+}

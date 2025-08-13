@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useContexNotification } from '../providers/notificationProvider';
-import NotificationComponent from './notificationComponent';
+import NotificationComponent from './NotificationComponent';
 
 export const NotificationContainer: React.FC = () => {
     const { notifications } = useContexNotification();

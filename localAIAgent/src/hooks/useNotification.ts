@@ -1,6 +1,6 @@
 import { useContexNotification } from '../providers/notificationProvider';
 import { v4 as uuidv4 } from 'uuid';
-import { NotificationType } from '../components/notificationComponent';
+import { NotificationType } from '../components/NotificationComponent';
 
 interface BaseNotificationProps {
     message: string;

@@ -1,0 +1,41 @@
+{
+    "identifier": "fs-app-config",
+    "description": "Permite leer y escribir config en AppConfig",
+    "windows": [
+        "main"
+    ], 
+    "permissions": [
+        {
+            "identifier": "fs:allow-write-text-file",
+            "allow": [
+                {
+                    "path": "$APPCONFIG/**"
+                }
+            ]
+        },
+        {
+            "identifier": "fs:allow-read-text-file",
+            "allow": [
+                {
+                    "path": "$APPCONFIG/**"
+                }
+            ]
+        },
+        {
+            "identifier": "fs:allow-exists",
+            "allow": [
+                {
+                    "path": "$APPCONFIG/**"
+                }
+            ]
+        },
+        {
+            "identifier": "fs:allow-mkdir",
+            "allow": [
+                {
+                    "path": "$APPCONFIG/**"
+                }
+            ]
+        }
+    ]
+}

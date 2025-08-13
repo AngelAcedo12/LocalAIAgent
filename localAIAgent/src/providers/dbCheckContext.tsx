@@ -3,6 +3,7 @@ import initApp, { dbPromise } from '../libs/db';
 import { useNotification } from '../hooks/useNotification';
 import { checkConnection as checkDBConnection } from '../libs/checkConexion';
 import { startDefaultDownload } from '../libs/downloadModels';
+import { is_llama_running } from '../libs/invokellamaServer';
 
 // Define the shape of our context data
 interface DBCheckContextProps {
@@ -40,6 +41,8 @@ export const DBCheckProvider = ({ children }: { children: ReactNode }) => {
                 setIsConnected(true);
                 loader.complete('DB connection successful');
                 await initApp(); // Initialize the app if connection is successful
+
+
                 // await startDefaultDownload();
             } else {
                 setIsConnected(false);

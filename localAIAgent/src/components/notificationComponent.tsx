@@ -7,6 +7,7 @@ export interface NotificationProps {
     id?: string;
     timeDuration?: number;
     type: NotificationType;
+
 }
 
 export default class NotificationComponent extends React.Component<NotificationProps, { visible: boolean; isLeaving: boolean }> {
@@ -14,6 +15,11 @@ export default class NotificationComponent extends React.Component<NotificationP
         visible: true,
         isLeaving: false
     };
+
+
+
+
+
 
     componentDidMount() {
         const { timeDuration, type } = this.props;
@@ -43,7 +49,8 @@ export default class NotificationComponent extends React.Component<NotificationP
             error: 'bg-red-500 outline outline-2 outline-red-300 bg-opacity-60',
             warning: 'bg-yellow-500 outline outline-2 outline-yellow-300 bg-opacity-60',
             loading: 'bg-blue-500 outline outline-2 outline-blue-300 bg-opacity-60',
-            info: 'bg-gray-500 outline outline-2 outline-gray-300 bg-opacity-60'
+            info: 'bg-gray-500 outline outline-2 outline-gray-300 bg-opacity-60',
+            download: 'bg-blue-500 outline outline-2 outline-blue-300 bg-opacity-60'
         };
 
         // Animación de entrada y salida
@@ -61,6 +68,7 @@ export default class NotificationComponent extends React.Component<NotificationP
 
         return (
             <div className={this.getNotificationClass()} id={id}>
+
                 {type === 'loading' && (
                     <div className="animate-spin  rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
                 )}
